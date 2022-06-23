@@ -19,8 +19,6 @@ import { openSnackbar } from '../../redux/slices/snackbarSlice';
 
 import { useNavigate } from "react-router-dom";
 
-import { ValidationGroup } from 'mui-validate';
-
 const theme = createTheme();
 
 export default function SignUp() {
