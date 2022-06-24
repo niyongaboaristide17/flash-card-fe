@@ -77,7 +77,6 @@ const FlashcardCreate = ({ open, handleClose, refetch }) => {
             <TextareaAutosize
               margin="normal"
               required
-              fullWidth
               style={{ width: '99.5%' }}
               minRows={5}
               name="description"

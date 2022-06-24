@@ -38,7 +38,7 @@ const FlipCard = (props) => {
 			</Typography>
 		  </CardContent>
 		  <CardActions>
-			{flashcard.isDone ? <DoneAllIcon color="success"/> : <RemoveDoneIcon sx={{ color: 'pink' }} />}
+			{flashcard.isDone ? <DoneAllIcon color="success"/> : <RemoveDoneIcon onClick={props.handleOpen} sx={{ color: 'pink' }} />}
 			
 		  </CardActions>
 		</Card>

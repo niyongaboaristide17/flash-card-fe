@@ -24,3 +24,12 @@ export const CREATE_FLASHCARD_MUTATION = gql`
   		}
 	}
 `
+
+export const MARK_FLASHCARD_AS_DONE = gql`
+	mutation markFlashcardAsDone($input: ID!) {
+  		markFlashcardAsDone(input: $input) {
+    		id
+    		title
+  		}
+	}
+`

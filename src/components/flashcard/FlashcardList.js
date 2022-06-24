@@ -6,11 +6,24 @@ import { Box, Button, Grid, MenuItem, TextField } from '@mui/material'
 import FlipCard from '../card/FlipCard'
 import FlashcardCreate from './FlashcardCreate'
 import Loading from '../loading/Loading'
+import FlashcardMarkDone from './FlashcardMarkDone'
 function FlashcardList() {
 	const [order, setOrder] = useState()
 	const [open, setOpen] = React.useState(false);
+	const [openD, setOpenD] = React.useState(false);
+	const [card, setCard] = useState({})
+
 	const handleOpen = () => setOpen(true);
 	const handleClose = () => setOpen(false);
+
+	const handleOpenD = (x) => {
+		setCard(x)
+		setOpenD(true);
+	}
+	const handleCloseD = () => setOpenD(false);
+
+
+
 
 	const { error, loading, data, refetch } = useQuery(USER_FLASHCARD, {
 		variables: {
@@ -24,6 +37,7 @@ function FlashcardList() {
 	return (
 		<div>
 			<ResponsiveAppBar />
+			<FlashcardMarkDone refetch={refetch} flashcard={card} open={openD} handleClose={handleCloseD} refetch={refetch}/>
 			<FlashcardCreate open={open} handleClose={handleClose} refetch={refetch} />
 			<Box sx={{ m: 2 }}>
 				<Grid container spacing={4}>
@@ -51,7 +65,7 @@ function FlashcardList() {
 					columnSpacing={{ xs: 2, sm: 2, md: 3 }}>
 					{data && data.userFlashcards.map((flashcard) => (
 						<Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={flashcard.id}>
-							<FlipCard flashcard={flashcard} />
+							<FlipCard flashcard={flashcard} handleOpen={()=>handleOpenD(flashcard)} />
 						</Grid>
 					))}
 				</Grid>}
