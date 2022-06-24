@@ -39,7 +39,7 @@ const FlipCard = (props) => {
 		  </CardContent>
 		  <CardActions>
 			{flashcard.isDone ? <DoneAllIcon color="success"/> : <RemoveDoneIcon onClick={props.handleOpen} sx={{ color: 'pink' }} />}
-			
+			<Button onClick={props.handleOpenDel}>Del</Button>
 		  </CardActions>
 		</Card>
 	  );

@@ -7,10 +7,12 @@ import FlipCard from '../card/FlipCard'
 import FlashcardCreate from './FlashcardCreate'
 import Loading from '../loading/Loading'
 import FlashcardMarkDone from './FlashcardMarkDone'
+import FlashcardDelete from './FlashcardDelete'
 function FlashcardList() {
 	const [order, setOrder] = useState()
-	const [open, setOpen] = React.useState(false);
-	const [openD, setOpenD] = React.useState(false);
+	const [open, setOpen] = useState(false);
+	const [openD, setOpenD] = useState(false);
+	const [openDel, setOpenDel] = useState(false);
 	const [card, setCard] = useState({})
 
 	const handleOpen = () => setOpen(true);
@@ -20,7 +22,14 @@ function FlashcardList() {
 		setCard(x)
 		setOpenD(true);
 	}
+
+	const handleOpenDel = (x) => {
+		setCard(x)
+		setOpenDel(true);
+	}
+
 	const handleCloseD = () => setOpenD(false);
+	const handleCloseDel = () => setOpenDel(false);
 
 
 
@@ -37,7 +46,8 @@ function FlashcardList() {
 	return (
 		<div>
 			<ResponsiveAppBar />
-			<FlashcardMarkDone refetch={refetch} flashcard={card} open={openD} handleClose={handleCloseD} refetch={refetch}/>
+			<FlashcardDelete refetch={refetch} flashcard={card} open={openDel} handleClose={handleCloseDel}/>
+			<FlashcardMarkDone refetch={refetch} flashcard={card} open={openD} handleClose={handleCloseD}/>
 			<FlashcardCreate open={open} handleClose={handleClose} refetch={refetch} />
 			<Box sx={{ m: 2 }}>
 				<Grid container spacing={4}>
@@ -65,7 +75,7 @@ function FlashcardList() {
 					columnSpacing={{ xs: 2, sm: 2, md: 3 }}>
 					{data && data.userFlashcards.map((flashcard) => (
 						<Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={flashcard.id}>
-							<FlipCard flashcard={flashcard} handleOpen={()=>handleOpenD(flashcard)} />
+							<FlipCard flashcard={flashcard} handleOpen={()=>handleOpenD(flashcard)} handleOpenDel={()=>handleOpenDel(flashcard)} />
 						</Grid>
 					))}
 				</Grid>}

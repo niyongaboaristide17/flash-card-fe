@@ -33,3 +33,11 @@ export const MARK_FLASHCARD_AS_DONE = gql`
   		}
 	}
 `
+
+export const DELETE_FLASHCAR_MUTATION = gql`
+	mutation deleteFlashcard($input: ID!){
+  		deleteFlashcard(input: $input) {
+    		title
+  		}
+	}
+`
