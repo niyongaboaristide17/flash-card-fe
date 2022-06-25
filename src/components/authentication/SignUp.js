@@ -1,4 +1,4 @@
-import * as React from 'react';
+import  React, { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -18,32 +18,36 @@ import { useDispatch } from 'react-redux'
 import { openSnackbar } from '../../redux/slices/snackbarSlice';
 
 import { useNavigate } from "react-router-dom";
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const theme = createTheme();
 
 export default function SignUp() {
+
+
+	const [name, setName] = useState('')
+	const [email, setEmail] = useState('')
+	const [password, setPassword] = useState('')
 
 	const [createUser, { error, loading, data }] = useMutation(CREATE_USER_MUTATION)
 	const dispatch = useDispatch()
 
 	const navigate = useNavigate()
 
-	const handleSubmit = (event) => {
-		event.preventDefault();
-		const data = new FormData(event.currentTarget);
+	const handleSubmit = () => {
 		createUser({
 			variables: {
 				input: {
-					name: data.get('name'),
-					email: data.get('email'),
-					password: data.get('password'),
+					name,
+					email,
+					password
 				}
 			}
 		}).then((result) => {
-			dispatch(openSnackbar({message: 'user created successfully! Login', severity: 'success'}))
-			navigate('/signin', {replace: true})
+			dispatch(openSnackbar({ message: 'user created successfully! Login', severity: 'success' }))
+			navigate('/signin', { replace: true })
 		}).catch((error) => {
-			dispatch(openSnackbar({message: error.message, severity: 'error'}))
+			dispatch(openSnackbar({ message: error.message, severity: 'error' }))
 		})
 	};
 
@@ -63,50 +67,61 @@ export default function SignUp() {
 					<Typography component="h1" variant="h5">
 						Sign up
 					</Typography>
-					<Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-						<Grid container spacing={2}>
-							<Grid item xs={12}>
-								<TextField
-									required
-									fullWidth
-									id="name"
-									label="Name"
-									name="name"
-									autoComplete="name"
-								/>
-							</Grid>
+					<Box sx={{ mt: 3 }}>
+						<ValidatorForm form="true" onSubmit={handleSubmit} onError={errors => console.log(errors)}>
+							<Grid container spacing={2}>
+								<Grid item xs={12}>
+									<TextValidator
+										fullWidth
+										id="name"
+										label="Name"
+										name="name"
+										validators={['required']}
+										errorMessages={['this field is required']}
+										autoComplete="name"
+										value={name}
+										onChange={(e) => setName(e.target.value)}
+									/>
+								</Grid>
 
-							<Grid item xs={12}>
-								<TextField
-									required
-									fullWidth
-									id="email"
-									label="Email Address"
-									type="email"
-									name="email"
-									autoComplete="email"
-								/>
+								<Grid item xs={12}>
+									<TextValidator
+										fullWidth
+										validators={['required', 'isEmail']}
+										errorMessages={['email is required', 'Please enter a valid email address']}
+										id="email"
+										label="Email Address"
+										type="email"
+										name="email"
+										autoComplete="email"
+										value={email}
+										onChange={(e) => setEmail(e.target.value)}
+									/>
+								</Grid>
+								<Grid item xs={12}>
+									<TextValidator
+										fullWidth
+										validators={['required']}
+										errorMessages={['password is required']}
+										name="password"
+										label="Password"
+										type="password"
+										id="password"
+										value={password}
+										autoComplete="new-password"
+										onChange={(e) => setPassword(e.target.value)}
+									/>
+								</Grid>
 							</Grid>
-							<Grid item xs={12}>
-								<TextField
-									required
-									fullWidth
-									name="password"
-									label="Password"
-									type="password"
-									id="password"
-									autoComplete="new-password"
-								/>
-							</Grid>
-						</Grid>
-						<Button
-							type="submit"
-							fullWidth
-							variant="contained"
-							sx={{ mt: 3, mb: 2 }}
-						>
-							{loading ? "Submitting..." : 'Sign Up'}
-						</Button>
+							<Button
+								type="submit"
+								fullWidth
+								variant="contained"
+								sx={{ mt: 3, mb: 2 }}
+							>
+								{loading ? "Submitting..." : 'Sign Up'}
+							</Button>
+						</ValidatorForm>
 						<Grid container justifyContent="flex-end">
 							<Grid item>
 								<Link href="/signin" variant="body2">

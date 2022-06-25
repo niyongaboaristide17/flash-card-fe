@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { TextField, TextareaAutosize } from '@mui/material';
+import { TextareaAutosize } from '@mui/material';
 
 import { CREATE_FLASHCARD_MUTATION } from '../../graphql/Mutations';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 import { openSnackbar } from '../../redux/slices/snackbarSlice';
+
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 const style = {
   position: 'absolute',
@@ -29,15 +31,16 @@ const FlashcardCreate = ({ open, handleClose, refetch }) => {
 
   const dispatch = useDispatch()
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const formData = new FormData(event.currentTarget);
+  const [title, setTitle] = useState('')
+  const [description, setDescription] = useState('')
+
+  const handleSubmit = () => {
 
     createFlashcard({
       variables: {
         input: {
-          title: formData.get('title'),
-          description: formData.get('description'),
+          title,
+          description,
         }
       }
     }).then((result) => {
@@ -63,8 +66,9 @@ const FlashcardCreate = ({ open, handleClose, refetch }) => {
             ADD A CARD
           </Typography>
 
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
-            <TextField
+          <Box   sx={{ mt: 1 }}>
+            <ValidatorForm onSubmit={handleSubmit}>
+            <TextValidator
               margin="normal"
               required
               fullWidth
@@ -73,6 +77,8 @@ const FlashcardCreate = ({ open, handleClose, refetch }) => {
               name="title"
               autoComplete="title"
               autoFocus
+              value={title}
+              onChange={(e)=> setTitle(e.target.value)}
             />
             <TextareaAutosize
               margin="normal"
@@ -84,6 +90,8 @@ const FlashcardCreate = ({ open, handleClose, refetch }) => {
               id="description"
               placeholder='Description'
               autoComplete="description"
+              value={description}
+              onChange={(e)=> setDescription(e.target.value)}
             />
             <Button
               type="submit"
@@ -93,6 +101,8 @@ const FlashcardCreate = ({ open, handleClose, refetch }) => {
             >
               {loading ? "CREATING..." : 'CREATE'}
             </Button>
+            </ValidatorForm>
+            
 
           </Box>
 

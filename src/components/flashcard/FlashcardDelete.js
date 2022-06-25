@@ -3,7 +3,6 @@ import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
-import { TextField, TextareaAutosize } from '@mui/material';
 import { DELETE_FLASHCAR_MUTATION } from '../../graphql/Mutations';
 import { useMutation } from '@apollo/client';
 import { useDispatch } from 'react-redux';
@@ -58,16 +57,16 @@ const FlashcardDelete = ({ open, handleClose, refetch, flashcard }) => {
 			  Are you sure you want to delete this Flash card?
 			</Typography>
 			<br/>
-			<Typography sx={{ mb: 1.5 }} color="text.secondary">
+			<Typography color="text.secondary">
 			  title
 			</Typography>
-			<Typography variant="h5" component="div">
+			<Typography sx={{ mb: 1.5 }}  variant="h5" component="div">
 			  {flashcard.title}
 			</Typography>
-			<Typography sx={{ mb: 1.5 }} color="text.secondary">
+			<Typography  color="text.secondary">
 			  Description
 			</Typography>
-			<Typography variant="body2">
+			<Typography sx={{ mb: 1.5 }}  variant="body2">
 				{flashcard.description }
 			</Typography>
 			<br/>
