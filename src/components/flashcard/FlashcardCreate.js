@@ -45,7 +45,7 @@ const FlashcardCreate = ({ open, handleClose, refetch }) => {
       }
     }).then((result) => {
       refetch()
-      dispatch(openSnackbar({ message: result.data.createFlashcard.title + ' successfully', severity: 'success' }))
+      dispatch(openSnackbar({ message: result.data.createFlashcard.title + ' create successfully', severity: 'success' }))
       handleClose()
     }).catch((error) => {
       dispatch(openSnackbar({ message: error.message, severity: 'error' }))
@@ -76,20 +76,23 @@ const FlashcardCreate = ({ open, handleClose, refetch }) => {
               label="title"
               name="title"
               autoComplete="title"
+              validators={['required']}
               autoFocus
               value={title}
               onChange={(e)=> setTitle(e.target.value)}
             />
-            <TextareaAutosize
+            <TextValidator
               margin="normal"
               required
-              style={{ width: '99.5%' }}
+              fullWidth
               minRows={5}
               name="description"
               label="description"
               id="description"
               placeholder='Description'
               autoComplete="description"
+              validators={['required']}
+              errorMessages={['description is required']}
               value={description}
               onChange={(e)=> setDescription(e.target.value)}
             />

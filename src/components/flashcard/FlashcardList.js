@@ -8,11 +8,13 @@ import FlashcardCreate from './FlashcardCreate'
 import Loading from '../loading/Loading'
 import FlashcardMarkDone from './FlashcardMarkDone'
 import FlashcardDelete from './FlashcardDelete'
+import FlashcardUpdate from './FlashcardUpdate'
 function FlashcardList() {
 	const [order, setOrder] = useState()
 	const [open, setOpen] = useState(false);
 	const [openD, setOpenD] = useState(false);
 	const [openDel, setOpenDel] = useState(false);
+	const [openUp, setOpenUp] = useState(false);
 	const [card, setCard] = useState({})
 
 	const handleOpen = () => setOpen(true);
@@ -28,8 +30,14 @@ function FlashcardList() {
 		setOpenDel(true);
 	}
 
+	const handleOpenUp = (x) => {
+		setCard(x)
+		setOpenUp(true);
+	}
+
 	const handleCloseD = () => setOpenD(false);
 	const handleCloseDel = () => setOpenDel(false);
+	const handleCloseUp = () => setOpenUp(false);
 
 
 
@@ -49,6 +57,7 @@ function FlashcardList() {
 			<FlashcardDelete refetch={refetch} flashcard={card} open={openDel} handleClose={handleCloseDel}/>
 			<FlashcardMarkDone refetch={refetch} flashcard={card} open={openD} handleClose={handleCloseD}/>
 			<FlashcardCreate open={open} handleClose={handleClose} refetch={refetch} />
+			<FlashcardUpdate refetch={refetch} open={openUp} flashcard={card} handleClose={handleCloseUp} />
 			<Box sx={{ m: 2 }}>
 				<Grid container spacing={4}>
 					<Grid item>
@@ -75,7 +84,7 @@ function FlashcardList() {
 					columnSpacing={{ xs: 2, sm: 2, md: 3 }}>
 					{data && data.userFlashcards.map((flashcard) => (
 						<Grid item xs={12} sm={6} md={4} lg={3} xl={3} key={flashcard.id}>
-							<FlipCard flashcard={flashcard} handleOpen={()=>handleOpenD(flashcard)} handleOpenDel={()=>handleOpenDel(flashcard)} />
+							<FlipCard flashcard={flashcard} handleOpen={()=>handleOpenD(flashcard)} handleOpenDel={()=>handleOpenDel(flashcard)} handleOpenUp={()=>handleOpenUp(flashcard)} />
 						</Grid>
 					))}
 				</Grid>}

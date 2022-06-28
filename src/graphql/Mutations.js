@@ -28,7 +28,6 @@ export const CREATE_FLASHCARD_MUTATION = gql`
 export const MARK_FLASHCARD_AS_DONE = gql`
 	mutation markFlashcardAsDone($input: ID!) {
   		markFlashcardAsDone(input: $input) {
-    		id
     		title
   		}
 	}
@@ -37,6 +36,14 @@ export const MARK_FLASHCARD_AS_DONE = gql`
 export const DELETE_FLASHCAR_MUTATION = gql`
 	mutation deleteFlashcard($input: ID!){
   		deleteFlashcard(input: $input) {
+    		title
+  		}
+	}
+`
+
+export const UPDATE_FLASHCAR_MUTATION = gql`
+	mutation updateFlashcard($id: ID!, $input: UpdateFlashcardInput!){
+  		updateFlashcard(id: $id, input: $input) {
     		title
   		}
 	}
