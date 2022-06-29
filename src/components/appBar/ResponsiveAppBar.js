@@ -14,7 +14,7 @@ const ResponsiveAppBar = () => {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    localStorage.removeItem('userToken');
+    localStorage.removeItem('token');
     navigate('/signin', { replace: true })
   }
 
