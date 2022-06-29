@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -10,6 +10,7 @@ import DoneAllIcon from '@mui/icons-material/DoneAll';
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import { styled } from '@mui/material/styles';
 import './FlipCard.css'
+import FlashcardUpdate from '../flashcard/FlashcardUpdate';
 
 const HtmlTooltip = styled(({ className, ...props }) => (
 	<Tooltip {...props} classes={{ popper: className }} />
@@ -27,8 +28,17 @@ const FlipCard = (props) => {
 
 	const { flashcard } = props;
 
+	const [open, setOpen] = useState(false)
+
+	const handleClose = () => setOpen(false);
+
+	const handleOpen = () => {
+		setOpen(true);
+	}
+
 	return (
 		<div className='flip-card' style={{ minHeight: '200px' }} >
+			<FlashcardUpdate refetch={props.refetch} open={open} flashcard={flashcard} handleClose={handleClose} />
 			<div className="flip-card-inner">
 				<div className='flip-card-front'>
 					<Card 
@@ -68,7 +78,7 @@ const FlipCard = (props) => {
 						<CardActions>
 							{flashcard.isDone ? <DoneAllIcon color="success" /> : <RemoveDoneIcon onClick={props.handleOpen} sx={{ color: 'pink' }} />}
 							<hr/>
-							<Button variant='outlined' onClick={props.handleOpenUp}>UPDATE</Button>
+							<Button variant='outlined' onClick={handleOpen}>UPDATE</Button>
 							<Button color='error' onClick={props.handleOpenDel}>DELETE</Button>
 						</CardActions>
 					</Card>

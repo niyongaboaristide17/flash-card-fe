@@ -7,8 +7,17 @@ import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import MenuIcon from '@mui/icons-material/Menu';
 
+import { useNavigate } from 'react-router-dom';
 
 const ResponsiveAppBar = () => {
+
+  const navigate = useNavigate()
+
+  const handleLogout = () => {
+    localStorage.removeItem('userToken');
+    navigate('/signin', { replace: true })
+  }
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -16,7 +25,7 @@ const ResponsiveAppBar = () => {
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             FlashcardsApp
           </Typography>
-          <Button color="inherit">Logout</Button>
+          <Button onClick={handleLogout} color="inherit">Logout</Button>
         </Toolbar>
       </AppBar>
     </Box>

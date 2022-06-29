@@ -55,10 +55,6 @@ const FlashcardUpdate = ({ open, handleClose, refetch, flashcard }) => {
 
 	};
 
-	useEffect(() => {
-
-	})
-
 	return (
 		<div>
 			<Modal
